@@ -15,29 +15,29 @@ import java.util.stream.Stream;
 class MainTest {
     @Test
     void countAllVisibleTrees() throws IOException {
-        Path path = Paths.get("/Users/ggerosa/Exercises/AdventOfCode/src/main/resources/data/day8/input.txt");
-        long result = Main.countAllVisibleTrees(path);
+        Path path = Paths.get("src/main/resources/data/day8/input.txt");
+        long result = Day08.countAllVisibleTrees(path);
         assertThat(result).isEqualTo(1825);
     }
 
     @Test
     void countAllVisibleTrees2() throws IOException {
-        Path path = Paths.get("/Users/ggerosa/Exercises/AdventOfCode/src/main/resources/data/day8/input.test.txt");
-        long result = Main.countAllVisibleTrees(path);
+        Path path = Paths.get("src/main/resources/data/day8/input.test.txt");
+        long result = Day08.countAllVisibleTrees(path);
         assertThat(result).isEqualTo(21);
     }
 
     @Test
     void computeBestScenic() throws IOException {
-        Path path = Paths.get("/Users/ggerosa/Exercises/AdventOfCode/src/main/resources/data/day8/input.txt");
-        int result = Main.computeBestScenic(path);
+        Path path = Paths.get("src/main/resources/data/day8/input.txt");
+        int result = Day08.computeBestScenic(path);
         assertThat(result).isEqualTo(235200);
     }
 
     @Test
     void computeBestScenic2() throws IOException {
-        Path path = Paths.get("/Users/ggerosa/Exercises/AdventOfCode/src/main/resources/data/day8/input.test.txt");
-        int result = Main.computeBestScenic(path);
+        Path path = Paths.get("src/main/resources/data/day8/input.test.txt");
+        int result = Day08.computeBestScenic(path);
         assertThat(result).isEqualTo(8);
     }
     
@@ -51,7 +51,7 @@ class MainTest {
                 new int[] {3,3,5,4,9},
                 new int[] {3,5,3,9,0}
         };
-        int result = Main.computeScenicWest(map, i, j);
+        int result = Day08.computeScenicWest(map, i, j);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -76,7 +76,7 @@ class MainTest {
                 new int[] {3,3,5,4,9},
                 new int[] {3,5,3,9,0}
         };
-        int result = Main.computeScenicEast(map, i, j);
+        int result = Day08.computeScenicEast(map, i, j);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -101,7 +101,7 @@ class MainTest {
                 new int[] {3,3,5,4,9},
                 new int[] {3,5,3,9,0}
         };
-        int result = Main.computeScenicNorth(map, i, j);
+        int result = Day08.computeScenicNorth(map, i, j);
         assertThat(result).isEqualTo(expected);
     }
 
@@ -126,7 +126,7 @@ class MainTest {
                 new int[] {3,3,5,4,9},
                 new int[] {3,5,3,9,0}
         };
-        int result = Main.computeScenicSouth(map, i, j);
+        int result = Day08.computeScenicSouth(map, i, j);
         assertThat(result).isEqualTo(expected);
     }
 
