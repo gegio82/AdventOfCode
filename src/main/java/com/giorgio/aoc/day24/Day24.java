@@ -1,5 +1,7 @@
 package com.giorgio.aoc.day24;
 
+import com.giorgio.aoc.common.data.Pair;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,6 +61,7 @@ public class Day24 {
         assert (!walls.contains(endPosition));
         int maxX = walls.stream().mapToInt(Position::x).max().orElseThrow() - 1;
         int maxY = walls.stream().mapToInt(Position::y).max().orElseThrow() - 1;
+        List<Position> EXITS = List.of(new Position (1, 0), new Position(maxX, maxY + 1));
 
         /*for (int i = 0; i < 10; i++ ) {
             final int time = i;
@@ -87,8 +90,11 @@ public class Day24 {
                 return time;
             }
 
-            Set<Pair<Direction, Position>> currentBlizzards = blizzards.stream()
+            Set<Position> currentBlizzardsAroundCurrentPosition = blizzards.stream()
                     .map(pair -> moveBlizzard(pair.first(), pair.second(), maxX, maxY, time + 1))
+                    .map(Pair::second)
+                    .filter(it -> it.x() >= currentPosition.x() - 1 && it.x() <= currentPosition.x() + 1)
+                    .filter(it -> it.y() >= currentPosition.y() - 1 && it.y() <= currentPosition.y() + 1)
                     .collect(Collectors.toSet());
 
             Set<Position> nextPositions = Stream.of(
@@ -97,19 +103,15 @@ public class Day24 {
                             new Position(currentPosition.x() + 1, currentPosition.y()),
                             new Position(currentPosition.x(), currentPosition.y() - 1),
                             new Position(currentPosition.x(), currentPosition.y() + 1))
-                    .filter(not(walls::contains))
-                    .filter(position -> currentBlizzards.stream().map(Pair::second).noneMatch(position::equals))
-                    .filter(position -> currentPosition.x() >= 0 && currentPosition.y() >= 0)
-                    .filter(position -> currentPosition.x() <= maxX + 1 && currentPosition.y() <= maxY + 1)
+
+                    .filter(position -> EXITS.contains(position) ||
+                            (position.x() > 0 && position.y() > 0 && position.x() <= maxX && position.y() <= maxY))
+                    .filter(not(currentBlizzardsAroundCurrentPosition::contains))
                     .collect(Collectors.toSet());
             for (Position nextPosition : nextPositions) {
                 final Pair<Position, Integer> newStatus = new Pair<>(nextPosition, time + 1);
-
                 queue.offer(newStatus);
-
             }
-
-
         }
         return 0;
     }
@@ -167,6 +169,7 @@ public class Day24 {
     }
 
     record Position(int x, int y) {}
+
     enum Direction {
         UP('^'), DOWN('v'), LEFT('<'), RIGHT('>');
         final char symbol;
@@ -189,7 +192,4 @@ public class Day24 {
             };
         }
     }
-    public record Pair<P,Q>(P first, Q second){
-    }
-
 }
