@@ -156,17 +156,5 @@ public class Day19Old {
     }
     record Status(int amountOre, int amountClay, int amountObsidian, int amountGeode,
                   int robotOre, int robotClay, int robotObsidian, int robotGeode, int time) {
-        boolean isClearlyBetter(Status other) {
-            return amountOre >= other.amountOre() &&
-                    amountClay >= other.amountClay &&
-                    amountObsidian >= other.amountObsidian() &&
-                    amountGeode >= other.amountGeode() &&
-                    robotOre >= other.robotOre() &&
-                    robotClay >= other.robotClay() &&
-                    robotObsidian >= other.robotObsidian() &&
-                    robotGeode >= other.robotGeode() &&
-                    time >= other.time();
-
-        }
     }
 }

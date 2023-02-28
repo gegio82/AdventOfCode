@@ -22,18 +22,13 @@ public class Day05 {
     public static String execute(Mover mover) throws IOException {
         List<Stack<Character>> stacks = new ArrayList<>();
         List<String> allLines = Files.readAllLines(Paths.get("src/main/resources/data/day5/input.txt"));
-        boolean start = false;
         for (String line : allLines) {
-            if (line.isBlank()) {
-                start = true;
-            } else if (start) {
-                Matcher matcher = MOVE_COMMAND.matcher(line);
-                if (matcher.matches()) {
-                    int howMany = Integer.parseInt(matcher.group(1));
-                    int from = Integer.parseInt(matcher.group(2));
-                    int to = Integer.parseInt(matcher.group(3));
-                    mover.move(stacks, howMany, from, to);
-                }
+            Matcher matcher = MOVE_COMMAND.matcher(line);
+            if (matcher.matches()) {
+                int howMany = Integer.parseInt(matcher.group(1));
+                int from = Integer.parseInt(matcher.group(2));
+                int to = Integer.parseInt(matcher.group(3));
+                mover.move(stacks, howMany, from, to);
             } else {
                 for (int i = 0; 1 + i * 4 < line.length(); i++) {
                     if (stacks.size() <= i) {
