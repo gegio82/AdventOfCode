@@ -25,7 +25,8 @@ public class Day07 {
         Directory currentDir = null;
         Directory root = new Directory(null, "/");
         allDirectories.add(root);
-        for (int i = 0; i < allLines.size(); i++) {
+        int i = 0;
+        while (i < allLines.size()) {
             String command = allLines.get(i);
             Matcher cdMatcher = CD_COMMAND.matcher(command);
             if (cdMatcher.matches()) {
@@ -39,16 +40,17 @@ public class Day07 {
                             .flatMap(dir -> dir.getSubDirectory(dirName))
                             .orElse(root);
                 }
+                i++;
+                continue;
             }
             Matcher lsMatcher = LS_COMMAND.matcher(command);
             if (lsMatcher.matches()) {
                 assert currentDir != null;
-                String fsObject = allLines.get(i + 1);
-
-                Matcher fileMatcher = FILE.matcher(fsObject);
-                Matcher dirMatcher = DIR.matcher(fsObject);
-                while((fileMatcher.matches() || dirMatcher.matches()) && i < allLines.size() - 2) {
-                    i++;
+                i++;
+                while(i < allLines.size()) {
+                    String fsObject = allLines.get(i);
+                    Matcher fileMatcher = FILE.matcher(fsObject);
+                    Matcher dirMatcher = DIR.matcher(fsObject);
                     if (fileMatcher.matches()) {
                         int size = Integer.parseInt(fileMatcher.group(1));
                         String fileName = fileMatcher.group(2);
@@ -58,10 +60,10 @@ public class Day07 {
                         final Directory child = new Directory(currentDir, dirName);
                         currentDir.addChild(child);
                         allDirectories.add(child);
+                    } else {
+                        break;
                     }
-                    fsObject = allLines.get(i + 1);
-                    fileMatcher = FILE.matcher(fsObject);
-                    dirMatcher = DIR.matcher(fsObject);
+                    i++;
                 }
             }
         }
